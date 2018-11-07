@@ -1,0 +1,30 @@
+body {
+	background-color: #6E8AA6;
+	color: white;
+}
+
+.landing_page h1{
+	color: white;
+	font-family: Times serif;
+}
+
+.landing_page .title_strip {
+	margin: 0;
+	background-image: url("../img/parmelan.jgp");
+	background-size: cover;
+	background-position: left bottom;
+	height: 500px;
+}
+
+.landing_title .landing_page .title_strip{
+	padding-top: 50px;
+}
+
+.footer {
+	color: white;
+	background-position: bottom;
+}
+
+.err_message {
+	color: red;
+}
