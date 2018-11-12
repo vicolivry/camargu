@@ -29,7 +29,7 @@ if (!isset($_POST['passwd']) || $_POST['passwd'] == "") {
 
 if (!isset($_POST['passwd_conf']) || $_POST['passwd_conf'] == "") {
 	$path .= $err === TRUE ? '&' : '';
-	$path .= 'passwd_conf_err=no_conf';
+	$path .= 'pwd_conf_err=no_conf';
 	$err = TRUE;	
 }
 
@@ -38,6 +38,11 @@ if (isset($_POST['login'], $_POST['email'], $_POST['email_confirm'], $_POST['pas
 	if ($_POST['email'] !== $_POST['email_confirm']) {
 		$path .= $err === TRUE ? '&' : ''; 
 		$path .= 'mail_conf_err=mail_diff';
+		$err = TRUE;
+	}
+	if ($_POST['passwd'] !== $_POST['passwd_conf']) {
+		$path .= $err === TRUE ? '&' : ''; 
+		$path .= 'pwd_conf_err=pwd_diff';
 		$err = TRUE;
 	}
 

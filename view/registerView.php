@@ -41,10 +41,10 @@ ob_start();
 				<div class='err_message'>Please confirm your email address</div>
 				<?php
 				}
-				else if ($_GET['mail_err'] === 'mail_diff') { ?>
+			}
+				if (isset ($_GET['mail_conf_err']) && $_GET['mail_conf_err'] === 'mail_diff') { ?>
 				<div class='err_message'>Both emails are different</div>
-			<?php }
-			} ?>
+			<?php } ?>
 			<h3>Password</h3>
 			<input type='text' name='passwd' />
 			<?php
@@ -56,9 +56,13 @@ ob_start();
 			}?>
 				<h3>Password confirmation</h3>
 			<?php
-				if (isset($_GET['passwd_conf_err'])) {
-				if ($_GET['passwd_conf_err'] === 'no_conf') { ?>
+				if (isset($_GET['pwd_conf_err'])) {
+				if ($_GET['pwd_conf_err'] === 'no_conf') { ?>
 				<div class='err_message'>Please confirm your password</div>
+				<?php
+				}
+				if ($_GET['pwd_conf_err'] === 'pwd_diff') { ?>
+				<div class='err_message'>Both passwords are different</div>
 				<?php
 				}
 			}?>
