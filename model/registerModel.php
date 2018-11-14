@@ -1,5 +1,5 @@
 <?php
-require_once "modeldb.Class.php";
+require_once "userModel.php";
 
 function createNewUser($user_db) {
 $log_val = $user_db['login'];

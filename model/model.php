@@ -18,18 +18,7 @@ function getPicture($pictureId) {
 	return $pictureId;
 }
 
-function getUser($user) {
-	$req = $sql->prepare('SELECT id, login, password, email
-	FROM users_table WHERE login === $user');
-	$req->execute(array($user));
-	$user = $req->fetch();
-	return ($user);
-}
 
-function createUser($login, $password, $email) {
-	$sql->query('INSERT INTO `users`
-	(login, password, email)
-	VALUES ($login, $password, $email)');
-}
+
 
 

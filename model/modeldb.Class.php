@@ -17,12 +17,5 @@ function __destruct() {}
 }
 
 
-class ModelUser extends DataBaseClass {
 
-	public function addUser($log_val, $pwd_val, $mail_val) {
-		$request = "INSERT INTO users (`login`, `password`, `email`) VALUES (?, ?, ?)";
-		$stmt = $this->_sql->prepare($request);
-		$stmt->execute(array($log_val, $pwd_val, $mail_val));
-	}
-}
 
