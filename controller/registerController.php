@@ -1,10 +1,10 @@
-<?php
-include '/var/www/html/model/registerModel.php';
+<?php 
+
 require_once '/var/www/html/model/userModel.php';
 session_start();
 
 $err = FALSE;
-$path = '../view/registerView.php?';
+$path = '/view/registerView.php?';
 $user = new UserClass;
 
 // Checks if login field is filled
@@ -15,7 +15,7 @@ if (!isset($_POST['login']) || $_POST['login'] == "") {
 	$err = TRUE;
 }
 
-else {
+else { // checks if login already exists
 	$log_check = $user->getUser($_POST['login']);
 	if ($log_check != NULL) {
 		$path .= $err === TRUE ? '&' : '';
@@ -34,10 +34,16 @@ if (!isset($_POST['email']) || $_POST['email'] == "") {
 }
 else {
 	$pattern = '/^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@(([0-9a-zA-Z])+([-\w]*[0-9a-zA-Z])*\.)+[a-zA-Z]{2,9})$/';
+	$mail_check = $user->getEmail($_POST['email']);
 	if (preg_match($pattern, $_POST['email']) == 0) { // Checks if email's format is correct
 		$path .= $err === TRUE ? '&' : '';
 		$path .= 'mail_err=wrng_frmt';
 		$err = TRUE;
+	}
+	else if ($mail_check != NULL) {
+			$path .= $err === TRUE ? '&' : '';
+			$path .= 'mail_err=already_exists';
+			$err = TRUE;
 	}
 	else
 		$_SESSION['email'] = $_POST['email']; //Gets the field in the session cookie
@@ -86,7 +92,6 @@ if (isset($_POST['email'], $_POST['email_confirm']))
 		$path .= 'mail_conf_err=mail_diff';
 		$err = TRUE;
 	}
-
 }
 
 // Checks if password_confirm and password fields are the same
@@ -103,11 +108,7 @@ if (isset($_POST['passwd_conf'], $_POST['passwd']))
 // Reloads the page with the errors
 
 
-if (1) {
-
-}
-
-else if ($err === TRUE) {
+if ($err === TRUE) {
 	//echo $path;
 	header('Location:' . $path);	
 }
@@ -117,5 +118,8 @@ else if ($err === TRUE) {
 else if ($err === FALSE) {
 	//$_SESSION['loggued'] = TRUE;
 	$user->addUser($_POST['login'], $_POST['passwd'], $_POST['email']);
+	unset($_SESSION['login']);
+	unset($_SESSION['email']);
+	unset($_SESSION['email_confirm']);
 	header ("Location: ../index.php?action=login");
 }

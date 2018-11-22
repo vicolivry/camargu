@@ -18,6 +18,7 @@ ob_start();
 	</div>
 	<body>
 		<form action='../controller/registerController.php' method='post'>
+			
 			<h3>Login</h3>
 			<input type='text' name='login' value="<?php
 				if (isset($_SESSION['login']))
@@ -27,7 +28,12 @@ ob_start();
 				<div class='err_message'>Please type your login</div>
 				<?php
 				}
+				else if ($_GET['login_err'] === 'already_exists') { ?>
+					<div class='err_message'>Login already taken, please choose another</div>
+					<?php
+				}
 			 } ?>
+			
 			<h3>Email</h3>
 			<input type='text' name='email' value="<?php
 				if (isset($_SESSION['email']) && !isset($_GET['mail_err']))
@@ -39,8 +45,14 @@ ob_start();
 				}
 				else if ($_GET['mail_err'] === 'wrng_frmt') { ?>
 				<div class='err_message'>Wrong address format</div>
-				<?php }
+				<?php
+				}
+				else if ($_GET['mail_err'] === 'already_exists') { ?>
+					<div class='err_message'>An account with this email address already exists</div>
+					<?php
+				}
 			 } ?>
+			
 			<h3>Please confirm your email</h3>
 			<input type='text' name='email_confirm' value="<?php
 				if (isset($_SESSION['email_confirm']) && !isset($_GET['mail_conf_err']))
@@ -58,6 +70,7 @@ ob_start();
 				if (isset($_GET['mail_conf_err']) && $_GET['mail_conf_err'] === 'mail_diff') { ?>
 				<div class='err_message'>Both emails are different</div>
 			<?php } ?>
+			
 			<h3>Password</h3>
 			<input type='password' name='passwd' />
 			<?php
@@ -67,7 +80,8 @@ ob_start();
 				<?php
 				}
 			}?>
-				<h3>Password confirmation</h3>
+				
+			<h3>Password confirmation</h3>
 			<input type='password' name='passwd_conf' />
 			<?php
 				if (isset($_GET['pwd_conf_err'])) {
